@@ -25,6 +25,7 @@ public class SwerveModule {
 		//driveMotor.setIdleMode(IdleMode.kBrake);
 		driveMotor.setInverted( Constants.DRIVE_MOTOR_INVERTED[swerveModIndex] );
 		driveMotor.setOpenLoopRampRate( 0.2 );
+		//TODO: Add PID for driveMotor
 
 		steerMotor = new CANSparkMax( Constants.SWERVE_STEER_MOTOR_IDS[swerveModIndex], MotorType.kBrushless );
 		steerMotor.setInverted( Constants.STEER_MOTOR_INVERTED[swerveModIndex] );
