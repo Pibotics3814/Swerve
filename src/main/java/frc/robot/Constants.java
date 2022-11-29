@@ -54,6 +54,9 @@ public final class Constants {
 		{ 1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 1.0 }  //Front Left
 	};
 
+	public static double SWERVE_STEER_MAX_VELOCITY = 10;
+	public static double SWERVE_STEER_MAX_ACCEL = 20;
+
 	public static boolean[] STEER_MOTOR_INVERTED = { false, false, false, false };
 	public static boolean[] DRIVE_MOTOR_INVERTED = { true, true, false, false };
 	

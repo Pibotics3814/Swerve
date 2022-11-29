@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
     Constants.swerveMod[0].drive( 0.0, 0.0 );
     SmartDashboard.putNumber( "Gyro ADIS", m_robotContainer.gyro.getAngle() );
     SmartDashboard.putNumber( "Module 1 encoder", Constants.swerveMod[0].getSteerAngle() );
-    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[0].position );
+    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[0].errorAngle );
   }
 
   @Override

@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import com.revrobotics.RelativeEncoder;
@@ -11,19 +13,19 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.ctre.phoenix.sensors.CANCoder;
 
 public class SwerveModule {
-	public CANSparkMax            driveMotor;
-	private SparkMaxPIDController driveVelocityPidController;
-	public RelativeEncoder        driveVelocityEncoder; 
+	public CANSparkMax                driveMotor;
+	private SparkMaxPIDController     driveVelocityPidController;
+	public RelativeEncoder            driveVelocityEncoder; 
 
-	public CANSparkMax            steerMotor;
-	public RelativeEncoder        steerVelocityEncoder;
-	public CANCoder               steerAngleEncoder;
-	private SparkMaxPIDController steerVelocityPidController;
-	private PIDController         steerAnglePIDController;
+	public CANSparkMax                steerMotor;
+	public RelativeEncoder            steerVelocityEncoder;
+	public CANCoder                   steerAngleEncoder;
+	private SparkMaxPIDController     steerVelocityPidController;
+	private ProfiledPIDController     steerAnglePIDController;
 
-	private final double[]        steerAnglePIDConstants;
-	private final double[]        driveVelocityPIDConstants;
-	public double                 errorAngle;
+	private final double[]            steerAnglePIDConstants;
+	private final double[]            driveVelocityPIDConstants;
+	public double                     errorAngle;
 
 	public class Vector {
 		public Vector(
@@ -61,7 +63,11 @@ public class SwerveModule {
 		steerAngleEncoder = new CANCoder( Constants.SWERVE_ENCODER_IDS[swerveModIndex] );
 
 		steerAnglePIDConstants = Constants.SWERVE_STEER_PID_CONSTANTS[swerveModIndex];
-		steerAnglePIDController = new PIDController( steerAnglePIDConstants[0], steerAnglePIDConstants[1], steerAnglePIDConstants[2] );
+		steerAnglePIDController = new ProfiledPIDController( 
+			steerAnglePIDConstants[0],
+			 steerAnglePIDConstants[1],
+			  steerAnglePIDConstants[2],
+			   new TrapezoidProfile.Constraints( Constants.SWERVE_STEER_MAX_VELOCITY, Constants.SWERVE_STEER_MAX_ACCEL ) );
 
         // Limit the PID Controller's input range between -pi and pi and set the input
 		// to be continuous.
@@ -88,9 +94,9 @@ public class SwerveModule {
 		double currentAngle = Math.toRadians( getSteerAngle() );
 		double requestAngle = ( angle + 1.0 ) * Math.PI;
 		double errorAngle = Math.acos( vectorDotProduct( angleToUnitVector( currentAngle ), angleToUnitVector( requestAngle ) ) );
-		errorAngle *= ( ( currentAngle > requestAngle )  && ( currentAngle > requestAngle + Math.PI ) ) ? 1.0 : -1.0; 
+		errorAngle *= ( ( currentAngle > requestAngle )  && ( currentAngle < requestAngle + Math.PI ) ) ? -1.0 : 1.0; 
 
-		final var turnOutput = steerAnglePIDController.calculate( 0.0, errorAngle );
+		final var turnOutput = steerAnglePIDController.calculate( errorAngle, 0.0 );
 		steerMotor.set( MathUtil.clamp( turnOutput, -1.0, 1.0 ) );
 
 		driveMotor.set( speed );
