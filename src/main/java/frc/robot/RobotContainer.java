@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.drive.GyroSwerveDriveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.GyroSwerveDrive;
 import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -19,14 +23,19 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final ADIS16470_IMU gyro = new ADIS16470_IMU();
+
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final GyroSwerveDrive m_gyroSwerveDrive = new GyroSwerveDrive();
 
-  public final SwerveModule m_swerveModule = new SwerveModule( 0 );
+  private final ExampleCommand m_autoCommand = new ExampleCommand( m_exampleSubsystem );
+
+  Joystick driveStick = new Joystick( Constants.driverStick );
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    m_gyroSwerveDrive.setDefaultCommand( new GyroSwerveDriveCommand( () -> driveStick.getY(), () -> driveStick.getX(), () -> driveStick.getZ(), gyro, m_gyroSwerveDrive ) );
     // Configure the button bindings
     configureButtonBindings();
   }

@@ -30,6 +30,8 @@ public final class Constants {
 	public static double  DriverXaxis = 0.;
 	public static boolean Driverstartbutton = false;
 
+	public static int driverStick = 0;
+
 	////////////////////////////////////////
 	//               Swerve               //
 	////////////////////////////////////////
@@ -80,7 +82,7 @@ public final class Constants {
 
 	public static void init() {
 		// Front Right = 0, Back Right = 1, Back Left = 2, Front Left = 3
-		/*
+		//*
 		swerveMod = new SwerveModule[4];
 		for (int i = 0; i < 4; i++) {
 			 swerveMod[i] = new SwerveModule( i );

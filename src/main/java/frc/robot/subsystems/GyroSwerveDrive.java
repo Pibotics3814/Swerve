@@ -5,16 +5,20 @@ import frc.robot.Constants;
 import frc.robot.commands.drive.GyroSwerveDriveCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax.IdleMode;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GyroSwerveDrive extends SubsystemBase {
   public double[] speed = new double[4];
   public double[] angle = new double[4];
   public boolean  fcd = true;
 
-  public void gyroDrive ( double str, double fwd, double rot ) {
+  ADIS16470_IMU m_gyro;
+
+  public void gyroDrive ( double str, double fwd, double rot, double gyroAngle ) {
     
     fcd = Constants.FieldCentricDrive;
-    computeSwerveInputs( str, fwd, rot );
+    computeSwerveInputs( str, fwd, rot, gyroAngle );
     setSetpoints( rot ); 
 
     for(int i = 0; i < 4; i++) {
@@ -67,10 +71,7 @@ public class GyroSwerveDrive extends SubsystemBase {
     return opp;
   }
 
-  public void computeSwerveInputs ( double str, double fwd, double rot ) {
-    //TODO: Add gyro input
-    double gyroAngle = -1 * Math.toRadians( Constants.gyro.getAngle() % 360 );
-
+  public void computeSwerveInputs ( double str, double fwd, double rot, double gyroAngle ) {
     if(fcd){
       double intermediary = fwd * Math.cos( gyroAngle ) + str * Math.sin( gyroAngle );
       str = -fwd * Math.sin( gyroAngle ) + str * Math.cos( gyroAngle );
@@ -95,8 +96,8 @@ public class GyroSwerveDrive extends SubsystemBase {
 
   public void setSetpoints( double rot ) {
     for(int i = 0; i < 4; i++) {
-      // SmartDashboard.putNumber("angle: " + i, angle[i]);
-      // SmartDashboard.putNumber("speed: " + i, speed[i]);
+      SmartDashboard.putNumber("angle: " + i, angle[i]);
+      SmartDashboard.putNumber("speed: " + i, speed[i]);
 
       double encCount = Constants.swerveMod[i].steerEncoder.getAbsolutePosition();
       angle[i] = ( angle[i] + 1 ) * Constants.SWERVE_ENC_CIRC / 2 + Constants.SWERVE_SETPOINT_OFFSET[i]; 
@@ -163,10 +164,5 @@ public class GyroSwerveDrive extends SubsystemBase {
 
       Constants.swerveMod[i].drive( speed[i], angle[i] );
     }
-  }
-  
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new GyroSwerveDriveCommand());
   }
 }

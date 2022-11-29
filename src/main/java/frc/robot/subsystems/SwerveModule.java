@@ -1,12 +1,9 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.MathUtil;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -47,17 +44,15 @@ public class SwerveModule {
 		steerPIDController.setTolerance( Constants.SWERVE_PID_TOLERANCE );
 	}
 
-	public double getSteerPosition() {
+	public double getSteerAngle() {
 		return steerEncoder.getAbsolutePosition();
 	}
 
 	// angle and speed should be from -1.0 to 1.0, like a joystick input
 	public void drive( double speed, double angle ) {
 	    // Calculate the turning motor output from the turning PID controller.
-		position = getSteerPosition();
-		System.out.println( position );
 
-		final var turnOutput = steerPIDController.calculate( position, angle );
+		final var turnOutput = steerPIDController.calculate( getSteerAngle(), angle );
 		steerMotor.set( MathUtil.clamp( turnOutput, -1.0, 1.0 ) );
 
 		driveMotor.set( speed );
