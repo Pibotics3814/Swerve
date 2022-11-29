@@ -28,45 +28,45 @@ public class GyroSwerveDriveCommand extends CommandBase {
     double axis0 = 0.0;  // forward motion
     double axis1 = 0.0;  // strafe motion
     int povValue = Constants.DriverPOV;
-    if (povValue < 0){
+    if (povValue < 0) {
         axis0 = Constants.driveMult * Constants.DriverYaxis;  // Forward motion
         axis1 = Constants.driveMult * Constants.DriverXaxis;  // strafe motion
-        }
-		else {
-			  switch (povValue) {
-				case 0: 
-					axis1 = -1.0;
-                    axis0 = 0.0;
-					break;
-				case 45: 
-					axis1 = -0.7;
-                    axis0 = 0.7;
-					break;
-				case 90: 
-					axis1 = 0.0;
-                    axis0 = 1.0;
-					break;
-				case 135: 
-					axis1 = 0.7;
-                    axis0 = 0.7;
-					break;
-				case 180: 
-					axis1 = 1.0;
-                    axis0 = 0.0;
-					break;
-				case 225: 
-					axis1 = 0.7;
-                    axis0 = -0.7;
-					break;
-				case 270: 
-					axis1 = 0.0;
-                    axis0 = -1.0;
-					break;
-				case 315: 
-					axis1 = -0.7;
-                    axis0 = -0.7;
-					break;
-				default: ;//do nothing
+    }
+	else {
+	    switch (povValue) {
+			case 0: 
+				axis1 = -1.0;
+                axis0 = 0.0;
+				break;
+			case 45: 
+                axis1 = -0.7;
+                axis0 = 0.7;
+                break;
+            case 90: 
+                axis1 = 0.0;
+                axis0 = 1.0;
+                break;
+            case 135: 
+                axis1 = 0.7;
+                axis0 = 0.7;
+                break;
+            case 180: 
+                axis1 = 1.0;
+                axis0 = 0.0;
+                break;
+            case 225: 
+                axis1 = 0.7;
+                axis0 = -0.7;
+                break;
+            case 270: 
+                axis1 = 0.0;
+                axis0 = -1.0;
+                break;
+            case 315: 
+                axis1 = -0.7;
+                axis0 = -0.7;
+                break;
+            default: ;//do nothing
         };
         axis0 *= Constants.driveMult;  
         axis1 *= Constants.driveMult;  
