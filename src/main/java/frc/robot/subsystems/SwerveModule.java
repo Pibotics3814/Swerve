@@ -58,9 +58,9 @@ public class SwerveModule {
 		//*
 		final var turnOutput = turnPIDController.calculate( position, angle );
 		
-		angleMotor.set( MathUtil.clamp( turnOutput, -1.0, 1.0 ) );
+		steerMotor.set( MathUtil.clamp( turnOutput, -1.0, 1.0 ) );
 		//*/
-		speedMotor.set( speed );
+		driveMotor.set( speed );
 	}
 
     public void initDefaultCommand() {
