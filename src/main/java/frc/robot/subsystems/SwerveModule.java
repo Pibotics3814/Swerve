@@ -13,32 +13,31 @@ import com.ctre.phoenix.sensors.CANCoder;
 
 public class SwerveModule {
 	private final double[] pidConstants;
-	public CANSparkMax speedMotor;
-	public CANSparkMax angleMotor;
+	public CANSparkMax driveMotor;
+	public CANSparkMax steerMotor;
 	public CANCoder steerEncoder;
 	public PIDController turnPIDController;
-	public RelativeEncoder wheelEncoder; 
+	public RelativeEncoder driveEncoder; 
 	double position;
 	
 	/* the SwerveModule subsystem */
 	public SwerveModule( int swerveModIndex, boolean angleMotorInverted, boolean wheelMotorInverted ) {
-
-		speedMotor = new CANSparkMax( swerveModIndex + 10, MotorType.kBrushless );
+		driveMotor = new CANSparkMax( Constants.SWERVE_DRIVE_MOTOR_IDS[ swerveModIndex ], MotorType.kBrushless );
 		//speedMotor.setIdleMode(IdleMode.kBrake);
-		speedMotor.setInverted( wheelMotorInverted );
-		speedMotor.setOpenLoopRampRate( 0.2 );
+		driveMotor.setInverted( wheelMotorInverted );
+		driveMotor.setOpenLoopRampRate( 0.2 );
 
-		angleMotor = new CANSparkMax( swerveModIndex + 20, MotorType.kBrushless );
-		angleMotor.setInverted( angleMotorInverted );
+		steerMotor = new CANSparkMax( Constants.SWERVE_STEER_MOTOR_IDS[ swerveModIndex ], MotorType.kBrushless );
+		steerMotor.setInverted( angleMotorInverted );
 
-		steerEncoder = new CANCoder( swerveModIndex + 1 );
+		steerEncoder = new CANCoder( Constants.SWERVE_ENCODER_IDS[ swerveModIndex ] );
 
-		wheelEncoder = speedMotor.getEncoder();
+		driveEncoder = driveMotor.getEncoder();
 		//if (wheelMotorInverted)	WheelEncoder.setInverted(true);
-		wheelEncoder.setPositionConversionFactor( Constants.drvDistPerPulseRev );
+		driveEncoder.setPositionConversionFactor( Constants.drvDistPerPulseRev );
 
 		pidConstants = Constants.SWERVE_PID_CONSTANTS[ swerveModIndex ];
-		turnPIDController = new PIDController( pidConstants[ 0 ], pidConstants[ 1 ] ,pidConstants[ 2 ] );
+		turnPIDController = new PIDController( pidConstants[ 0 ], pidConstants[ 1 ], pidConstants[ 2 ] );
 
         // Limit the PID Controller's input range between -pi and pi and set the input
 		// to be continuous.
@@ -46,7 +45,7 @@ public class SwerveModule {
 		turnPIDController.setTolerance( Constants.SWERVE_PID_TOLERANCE );
 	}
 
-	public double getSteerPosition(){
+	public double getSteerPosition() {
 		return steerEncoder.getAbsolutePosition();
 	}
 
