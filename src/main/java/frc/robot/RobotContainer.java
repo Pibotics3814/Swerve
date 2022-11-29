@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ADIS16470_IMU gyro = new ADIS16470_IMU();
+  public final ADIS16470_IMU gyro = new ADIS16470_IMU();
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 

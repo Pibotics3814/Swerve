@@ -30,8 +30,6 @@ public class GyroSwerveDriveCommand extends CommandBase {
     @Override
     public void execute() {
        m_gyroSwerveDrive.gyroDrive( dX.getAsDouble(), dY.getAsDouble(), dZ.getAsDouble(), Math.toRadians( m_gyro.getAngle() % 360 ) );
-       SmartDashboard.putNumber( "Gyro ADIS", m_gyro.getAngle() );
-       SmartDashboard.putNumber( "Module 1 encoder", Constants.swerveMod[0].getSteerAngle() );
        SmartDashboard.putNumber( "Module 2 encoder", Constants.swerveMod[1].getSteerAngle() );
        SmartDashboard.putNumber( "Module 3 encoder", Constants.swerveMod[2].getSteerAngle() );
        SmartDashboard.putNumber( "Module 4 encoder", Constants.swerveMod[3].getSteerAngle() );

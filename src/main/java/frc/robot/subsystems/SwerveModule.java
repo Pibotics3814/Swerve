@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
@@ -52,8 +53,9 @@ public class SwerveModule {
 	// angle and speed should be from -1.0 to 1.0, like a joystick input
 	public void drive( double speed, double angle ) {
 	    // Calculate the turning motor output from the turning PID controller.
-
-		final var turnOutput = steerPIDController.calculate( getSteerAngle(), angle );
+		double steerAngle = getSteerAngle();
+		position = steerAngle < 180.0 ? ( 180.0 - steerAngle ) / -180.0 : ( steerAngle - 180.0 ) / 180.0;
+		final var turnOutput = steerPIDController.calculate( position, angle );
 		steerMotor.set( MathUtil.clamp( turnOutput, -1.0, 1.0 ) );
 
 		driveMotor.set( speed );
