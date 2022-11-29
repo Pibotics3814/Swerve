@@ -10,9 +10,25 @@ public final class Constants {
 	public static double driveDirection = 1.0;
 	public static double JOYSTICK_DEADBAND = 0.2; // was .05
 	public static double TRIGGER_DEADBAND = 0.2;
+
+	public static boolean FieldCentricDrive = true;
 	
 	public static double RobotTargetHeading = 0.0;
 	public static boolean EnableAutoRobotHeading = false;
+
+	// joy stick values
+	public static double  OperatorLeftTrigger = 0.;
+	public static double  OperatorRightTrigger = 0.;
+	public static double  DriverLeftTrigger = 0.;
+	public static double  DriverRightTrigger = 0.;
+	public static int     OperatorPOV = -1;
+	public static int     DriverPOV = -1;
+	public static boolean Driverbackbutton = false;
+	public static double  OperatorArmJoystick = 0.0;
+	public static double  OperatorClimberJoystick = 0.0;
+	public static double  DriverYaxis = 0.;
+	public static double  DriverXaxis = 0.;
+	public static boolean Driverstartbutton = false;
 
 	////////////////////////////////////////
 	//               Swerve               //
@@ -34,8 +50,8 @@ public final class Constants {
 		{ 1.0, 0.0, 0.0 } 
 	};
 
-	public static boolean[] ANGLE_MOTOR_INVERTED = { false, false, false, false };
-	public static boolean[] WHEEL_MOTOR_INVERTED = { true, true, false, false };
+	public static boolean[] STEER_MOTOR_INVERTED = { false, false, false, false };
+	public static boolean[] DRIVE_MOTOR_INVERTED = { true, true, false, false };
 	
 	public static SwerveModule[] swerveMod;
 	
@@ -56,8 +72,19 @@ public final class Constants {
 
 	/*
 	 * Swerve module motor and encoder ids
+	 * { Front Right, Back Right, Back Left, Front Left }
 	 */
 	public static int[] SWERVE_DRIVE_MOTOR_IDS =     { 10, 11, 12, 13 };
 	public static int[] SWERVE_STEER_MOTOR_IDS =     { 20, 21, 22, 23 };
 	public static int[] SWERVE_ENCODER_IDS =         {  1,  2,  3,  4 };
+
+	public static void init() {
+		// Front Right = 0, Back Right = 1, Back Left = 2, Front Left = 3
+		/*
+		swerveMod = new SwerveModule[4];
+		for (int i = 0; i < 4; i++) {
+			 swerveMod[i] = new SwerveModule( i );
+		}
+		//*/
+	}
 }

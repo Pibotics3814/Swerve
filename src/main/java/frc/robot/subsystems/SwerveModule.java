@@ -12,32 +12,34 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.ctre.phoenix.sensors.CANCoder;
 
 public class SwerveModule {
-	private CANSparkMax           driveMotor;
-	private CANSparkMax           steerMotor;
-	private CANCoder              steerEncoder;
+	public CANSparkMax            driveMotor;
+	public RelativeEncoder        driveEncoder; 
+
+	public CANSparkMax            steerMotor;
+	public CANCoder               steerEncoder;
 	private PIDController         steerPIDController;
-	private RelativeEncoder       driveEncoder; 
+
 	private final double[]        pidConstants;
-	private double                position;
+	public double                 position;
 	
 	/* the SwerveModule subsystem */
-	public SwerveModule( int swerveModIndex, boolean angleMotorInverted, boolean wheelMotorInverted ) {
+	public SwerveModule( int swerveModIndex ) {
 		driveMotor = new CANSparkMax( Constants.SWERVE_DRIVE_MOTOR_IDS[ swerveModIndex ], MotorType.kBrushless );
 		//driveMotor.setIdleMode(IdleMode.kBrake);
-		driveMotor.setInverted( wheelMotorInverted );
+		driveMotor.setInverted( Constants.DRIVE_MOTOR_INVERTED[swerveModIndex] );
 		driveMotor.setOpenLoopRampRate( 0.2 );
 
-		steerMotor = new CANSparkMax( Constants.SWERVE_STEER_MOTOR_IDS[ swerveModIndex ], MotorType.kBrushless );
-		steerMotor.setInverted( angleMotorInverted );
+		steerMotor = new CANSparkMax( Constants.SWERVE_STEER_MOTOR_IDS[swerveModIndex], MotorType.kBrushless );
+		steerMotor.setInverted( Constants.STEER_MOTOR_INVERTED[swerveModIndex] );
 
-		steerEncoder = new CANCoder( Constants.SWERVE_ENCODER_IDS[ swerveModIndex ] );
+		steerEncoder = new CANCoder( Constants.SWERVE_ENCODER_IDS[swerveModIndex] );
 
 		driveEncoder = driveMotor.getEncoder();
 		//if (wheelMotorInverted)	WheelEncoder.setInverted(true);
 		driveEncoder.setPositionConversionFactor( Constants.drvDistPerPulseRev );
 
-		pidConstants = Constants.SWERVE_STEER_PID_CONSTANTS[ swerveModIndex ];
-		steerPIDController = new PIDController( pidConstants[ 0 ], pidConstants[ 1 ], pidConstants[ 2 ] );
+		pidConstants = Constants.SWERVE_STEER_PID_CONSTANTS[swerveModIndex];
+		steerPIDController = new PIDController( pidConstants[0], pidConstants[1], pidConstants[2] );
 
         // Limit the PID Controller's input range between -pi and pi and set the input
 		// to be continuous.

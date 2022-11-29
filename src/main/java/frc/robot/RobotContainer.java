@@ -23,7 +23,7 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  public final SwerveModule m_swerveModule = new SwerveModule( 0, false, false );
+  public final SwerveModule m_swerveModule = new SwerveModule( 0 );
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
