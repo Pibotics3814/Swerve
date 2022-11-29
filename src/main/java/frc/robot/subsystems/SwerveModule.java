@@ -15,9 +15,9 @@ public class SwerveModule {
 	private final double[] pidConstants;
 	public CANSparkMax speedMotor;
 	public CANSparkMax angleMotor;
-	public CANCoder encoder;
+	public CANCoder steerEncoder;
 	public PIDController turnPIDController;
-	public RelativeEncoder WheelEncoder; 
+	public RelativeEncoder wheelEncoder; 
 	double position;
 	
 	/* the SwerveModule subsystem */
@@ -31,11 +31,11 @@ public class SwerveModule {
 		angleMotor = new CANSparkMax( swerveModIndex + 20, MotorType.kBrushless );
 		angleMotor.setInverted( angleMotorInverted );
 
-		encoder = new CANCoder( swerveModIndex + 1 );
+		steerEncoder = new CANCoder( swerveModIndex + 1 );
 
-		WheelEncoder = speedMotor.getEncoder();
+		wheelEncoder = speedMotor.getEncoder();
 		//if (wheelMotorInverted)	WheelEncoder.setInverted(true);
-		WheelEncoder.setPositionConversionFactor( Constants.drvDistPerPulseRev );
+		wheelEncoder.setPositionConversionFactor( Constants.drvDistPerPulseRev );
 
 		pidConstants = Constants.SWERVE_PID_CONSTANTS[ swerveModIndex ];
 		turnPIDController = new PIDController( pidConstants[ 0 ], pidConstants[ 1 ] ,pidConstants[ 2 ] );
@@ -47,7 +47,7 @@ public class SwerveModule {
 	}
 
 	public double getSteerPosition(){
-		return encoder.getAbsolutePosition();
+		return steerEncoder.getAbsolutePosition();
 	}
 
 	// angle and speed should be from -1.0 to 1.0, like a joystick input
