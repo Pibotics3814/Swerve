@@ -19,7 +19,15 @@ public final class Constants {
 	////////////////////////////////////////
 
 	public static final double[] SWERVE_SETPOINT_OFFSET = { 0.0, 0.0, 0.0, 0.0 }; 
-	public static double[][] SWERVE_PID_CONSTANTS = { 
+	public static double[][] SWERVE_STEER_PID_CONSTANTS = { 
+		{ 1.0, 0.0, 0.0 }, 
+		{ 1.0, 0.0, 0.0 },
+		{ 1.0, 0.0, 0.0 },
+		{ 1.0, 0.0, 0.0 } 
+	};
+
+	//TODO: Add PID loop for drive motors
+	public static double[][] SWERVE_DRIVE_PID_CONSTANTS = { 
 		{ 1.0, 0.0, 0.0 }, 
 		{ 1.0, 0.0, 0.0 },
 		{ 1.0, 0.0, 0.0 },

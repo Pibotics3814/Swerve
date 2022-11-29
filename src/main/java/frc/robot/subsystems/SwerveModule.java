@@ -12,18 +12,18 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.ctre.phoenix.sensors.CANCoder;
 
 public class SwerveModule {
-	private final double[] pidConstants;
-	public CANSparkMax driveMotor;
-	public CANSparkMax steerMotor;
-	public CANCoder steerEncoder;
-	public PIDController turnPIDController;
-	public RelativeEncoder driveEncoder; 
-	double position;
+	private CANSparkMax           driveMotor;
+	private CANSparkMax           steerMotor;
+	private CANCoder              steerEncoder;
+	private PIDController         steerPIDController;
+	private RelativeEncoder       driveEncoder; 
+	private final double[]        pidConstants;
+	private double                position;
 	
 	/* the SwerveModule subsystem */
 	public SwerveModule( int swerveModIndex, boolean angleMotorInverted, boolean wheelMotorInverted ) {
 		driveMotor = new CANSparkMax( Constants.SWERVE_DRIVE_MOTOR_IDS[ swerveModIndex ], MotorType.kBrushless );
-		//speedMotor.setIdleMode(IdleMode.kBrake);
+		//driveMotor.setIdleMode(IdleMode.kBrake);
 		driveMotor.setInverted( wheelMotorInverted );
 		driveMotor.setOpenLoopRampRate( 0.2 );
 
@@ -36,13 +36,13 @@ public class SwerveModule {
 		//if (wheelMotorInverted)	WheelEncoder.setInverted(true);
 		driveEncoder.setPositionConversionFactor( Constants.drvDistPerPulseRev );
 
-		pidConstants = Constants.SWERVE_PID_CONSTANTS[ swerveModIndex ];
-		turnPIDController = new PIDController( pidConstants[ 0 ], pidConstants[ 1 ], pidConstants[ 2 ] );
+		pidConstants = Constants.SWERVE_STEER_PID_CONSTANTS[ swerveModIndex ];
+		steerPIDController = new PIDController( pidConstants[ 0 ], pidConstants[ 1 ], pidConstants[ 2 ] );
 
         // Limit the PID Controller's input range between -pi and pi and set the input
 		// to be continuous.
-        turnPIDController.enableContinuousInput( 0.0, Constants.SWERVE_ENC_CIRC );
-		turnPIDController.setTolerance( Constants.SWERVE_PID_TOLERANCE );
+        steerPIDController.enableContinuousInput( 0.0, Constants.SWERVE_ENC_CIRC );
+		steerPIDController.setTolerance( Constants.SWERVE_PID_TOLERANCE );
 	}
 
 	public double getSteerPosition() {
@@ -55,11 +55,9 @@ public class SwerveModule {
 		position = getSteerPosition();
 		System.out.println( position );
 
-		//*
-		final var turnOutput = turnPIDController.calculate( position, angle );
-		
+		final var turnOutput = steerPIDController.calculate( position, angle );
 		steerMotor.set( MathUtil.clamp( turnOutput, -1.0, 1.0 ) );
-		//*/
+
 		driveMotor.set( speed );
 	}
 
