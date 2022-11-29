@@ -38,6 +38,7 @@ public final class Constants {
 
 	public static final double[] SWERVE_SETPOINT_OFFSET = { 0.0, 0.0, 0.0, 0.0 }; 
 	public static double[][] SWERVE_STEER_PID_CONSTANTS = { 
+		// kP   kI   kD
 		{ 0.6, 0.2, 0.0 }, //Front Right
 		{ 1.0, 0.0, 0.0 }, //Rear Right
 		{ 1.0, 0.0, 0.0 }, //Rear Left
@@ -46,10 +47,11 @@ public final class Constants {
 
 	//TODO: Add PID loop for drive motors
 	public static double[][] SWERVE_DRIVE_PID_CONSTANTS = { 
-		{ 1.0, 0.0, 0.0 }, 
-		{ 1.0, 0.0, 0.0 },
-		{ 1.0, 0.0, 0.0 },
-		{ 1.0, 0.0, 0.0 } 
+		// kP   kI   kD  kIz  kFF  kMn  kMx
+		{ 1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 1.0 }, //Front Right
+		{ 1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 1.0 }, //Rear Right
+		{ 1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 1.0 }, //Rear Left
+		{ 1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 1.0 }  //Front Left
 	};
 
 	public static boolean[] STEER_MOTOR_INVERTED = { false, false, false, false };

@@ -14,7 +14,7 @@ public class GyroSwerveDrive extends SubsystemBase {
 
   ADIS16470_IMU m_gyro;
 
-  public void gyroDrive ( double str, double fwd, double rot, double gyroAngle ) {
+  public void gyroDrive( double str, double fwd, double rot, double gyroAngle ) {
     
     fcd = Constants.FieldCentricDrive;
     computeSwerveInputs( str, fwd, rot, gyroAngle );
@@ -70,7 +70,7 @@ public class GyroSwerveDrive extends SubsystemBase {
     return opp;
   }
 
-  public void computeSwerveInputs ( double str, double fwd, double rot, double gyroAngle ) {
+  public void computeSwerveInputs( double str, double fwd, double rot, double gyroAngle ) {
     if(fcd){
       double intermediary = fwd * Math.cos( gyroAngle ) + str * Math.sin( gyroAngle );
       str = -fwd * Math.sin( gyroAngle ) + str * Math.cos( gyroAngle );
@@ -95,10 +95,10 @@ public class GyroSwerveDrive extends SubsystemBase {
 
   public void setSetpoints( double rot ) {
     for(int i = 0; i < 4; i++) {
-      SmartDashboard.putNumber("angle: " + i, angle[i]);
-      SmartDashboard.putNumber("speed: " + i, speed[i]);
+      SmartDashboard.putNumber( "angle: " + i, angle[i] );
+      SmartDashboard.putNumber( "speed: " + i, speed[i] );
 
-      double encCount = Constants.swerveMod[i].steerEncoder.getAbsolutePosition();
+      double encCount = Constants.swerveMod[i].steerAngleEncoder.getAbsolutePosition();
       angle[i] = ( angle[i] + 1 ) * Constants.SWERVE_ENC_CIRC / 2 + Constants.SWERVE_SETPOINT_OFFSET[i]; 
       if(angle[i] > Constants.SWERVE_ENC_CIRC) angle[i] -= Constants.SWERVE_ENC_CIRC;
 
@@ -112,7 +112,7 @@ public class GyroSwerveDrive extends SubsystemBase {
   }
 
   public void reset_encoder(){
-      Constants.swerveMod[2].driveEncoder.setPosition( 0.0 );
+      Constants.swerveMod[2].driveVelocityEncoder.setPosition( 0.0 );
   }
 
   public void WheelToCoast(){
@@ -129,7 +129,7 @@ public class GyroSwerveDrive extends SubsystemBase {
 
   public double GetCurrentDistance() {  // reading wheel 0 only
     double dist =0.0;
-        dist = -Constants.swerveMod[2].driveEncoder.getPosition();
+        dist = -Constants.swerveMod[2].driveVelocityEncoder.getPosition();
         return( dist );
 }
 
@@ -151,7 +151,7 @@ public class GyroSwerveDrive extends SubsystemBase {
     angle[3] = Math.atan2( b, c ) / Math.PI;
 
     for(int i = 0; i < 4; i++){
-      double encCount = Constants.swerveMod[i].steerEncoder.getAbsolutePosition(); 
+      double encCount = Constants.swerveMod[i].steerAngleEncoder.getAbsolutePosition(); 
       angle[i] = ( angle[i] + 1 ) * Constants.SWERVE_ENC_CIRC / 2 + Constants.SWERVE_SETPOINT_OFFSET[i]; 
       if(angle[i] > Constants.SWERVE_ENC_CIRC) angle[i] -= Constants.SWERVE_ENC_CIRC;
 
