@@ -65,7 +65,7 @@ public class SwerveModule {
 
         // Limit the PID Controller's input range between -pi and pi and set the input
 		// to be continuous.
-        steerAnglePIDController.enableContinuousInput( 0.0, Constants.SWERVE_ENC_CIRC );
+        steerAnglePIDController.enableContinuousInput( -Math.PI, Math.PI );
 		steerAnglePIDController.setTolerance( Constants.SWERVE_PID_TOLERANCE );
 	}
 
