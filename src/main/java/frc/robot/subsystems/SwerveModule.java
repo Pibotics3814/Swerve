@@ -15,7 +15,7 @@ import com.ctre.phoenix.sensors.CANCoder;
 public class SwerveModule {
 	public CANSparkMax                driveMotor;
 	private SparkMaxPIDController     driveVelocityPidController;
-	public RelativeEncoder            driveVelocityEncoder; 
+	public RelativeEncoder            driveMotorEncoder; //Used for velocity and position calculations
 
 	public CANSparkMax                steerMotor;
 	public RelativeEncoder            steerVelocityEncoder;
@@ -44,10 +44,10 @@ public class SwerveModule {
 		driveMotor.setOpenLoopRampRate( 0.2 );
 		//TODO: Add PID for driveMotor
 
-		driveVelocityEncoder = driveMotor.getEncoder();
+		driveMotorEncoder = driveMotor.getEncoder();
 		//if (wheelMotorInverted)	WheelEncoder.setInverted(true);
-		driveVelocityEncoder.setPositionConversionFactor( Constants.drvDistPerPulseRev );
-		driveVelocityEncoder.setMeasurementPeriod(20);
+		driveMotorEncoder.setPositionConversionFactor( Constants.drvDistPerPulseRev );
+		driveMotorEncoder.setMeasurementPeriod(20);
 
 		driveVelocityPIDConstants = Constants.SWERVE_DRIVE_PID_CONSTANTS[swerveModIndex];
 		driveVelocityPidController.setP( driveVelocityPIDConstants[0] );
@@ -71,8 +71,12 @@ public class SwerveModule {
 
         // Limit the PID Controller's input range between -pi and pi and set the input
 		// to be continuous.
-        steerAnglePIDController.enableContinuousInput( -Math.PI, Math.PI );
+        steerAnglePIDController.enableContinuousInput( -1.0, 1.0 );
 		steerAnglePIDController.setTolerance( Constants.SWERVE_PID_TOLERANCE );
+	}
+
+	public double getDriveMotorVelocity(){
+		return driveMotorEncoder.getVelocity();
 	}
 
 	public double getSteerAngle() {

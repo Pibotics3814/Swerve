@@ -36,7 +36,9 @@ public final class Constants {
 	//               Swerve               //
 	////////////////////////////////////////
 
-	public static final double[] SWERVE_SETPOINT_OFFSET = { 0.0, 0.0, 0.0, 0.0 }; 
+	public static final double[] SWERVE_SETPOINT_OFFSET = { 0.0, 0.0, 0.0, 0.0 };
+	
+	//TODO: Add PID velocity loop for steer motors
 	public static double[][] SWERVE_STEER_PID_CONSTANTS = { 
 		// kP   kI   kD
 		{ 0.6, 0.2, 0.0 }, //Front Right
@@ -45,7 +47,7 @@ public final class Constants {
 		{ 1.0, 0.0, 0.0 }  //Front Left
 	};
 
-	//TODO: Add PID loop for drive motors
+	//TODO: Add PID velocity loop for drive motors
 	public static double[][] SWERVE_DRIVE_PID_CONSTANTS = { 
 		// kP   kI   kD  kIz  kFF  kMn  kMx
 		{ 1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 1.0 }, //Front Right
@@ -54,8 +56,20 @@ public final class Constants {
 		{ 1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 1.0 }  //Front Left
 	};
 
-	public static double SWERVE_STEER_MAX_VELOCITY = 10;
-	public static double SWERVE_STEER_MAX_ACCEL = 20;
+	/*
+	 * Steering motor characteristics
+	 * used for trapazoidal motion profiles
+	 * Values shown are theoretical
+	 * TODO: Get empirical data and remove all of this
+	 */
+	private static double SWERVE_STEER_MOTOR_MAX_SPEED =   5676;           //RPM
+	private static double SWERVE_STEER_MOTOR_GEARING =     0.4437;
+	private static double SWERVE_STEER_PULLEY_RADIUS =     3.8 * 0.0508;   //M   Radius in inches and multiplied by conversion constant
+	private static double SWERVE_STEER_MOTOR_TORQUE =      2.6;            //Nm
+	private static double SWERVE_STEER_MOTOR_MASS =        0.5628;         //Kg
+
+	public static double SWERVE_STEER_MAX_VELOCITY = 2.02608; //SWERVE_STEER_MOTOR_MAX_SPEED * SWERVE_STEER_MOTOR_GEARING * SWERVE_STEER_PULLEY_RADIUS * 2.0 * Math.PI;
+	public static double SWERVE_STEER_MAX_ACCEL = SWERVE_STEER_MOTOR_TORQUE / SWERVE_STEER_MOTOR_MASS;
 
 	public static boolean[] STEER_MOTOR_INVERTED = { false, false, false, false };
 	public static boolean[] DRIVE_MOTOR_INVERTED = { true, true, false, false };
@@ -74,8 +88,8 @@ public final class Constants {
 	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 20.0;
 	public static double driveMult = 0.7;
     //TODO: update to match motors
-    public static double drvDistPerPulseRev = ( 3.9 * 3.14 ) / ( 42 / 6.75 );  // inches
-    //                                      (wheel circum / (encppr * swerve Ratio)
+    public static double drvDistPerPulseRev = ( 3.9 * 3.14 ) / ( 42 / 6.75 );
+    //                                      (wheel circum inches / (encppr * swerve Ratio)
 
 	/*
 	 * Swerve module motor and encoder ids
@@ -89,11 +103,9 @@ public final class Constants {
 
 	public static void init() {
 		// Front Right = 0, Back Right = 1, Back Left = 2, Front Left = 3
-		//*
 		swerveMod = new SwerveModule[swerveModuleNumber];
 		for (int i = 0; i < swerveModuleNumber; i++) {
 			 swerveMod[i] = new SwerveModule( i );
 		}
-		//*/
 	}
 }
