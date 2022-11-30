@@ -26,10 +26,10 @@ public class GyroSwerveDrive extends SubsystemBase {
   }
 
   public void drive(double str, double fwd, double rot) {
-    double a = str - rot * 1.5 * ( Constants.SWERVE_LENGTH / Constants.SWERVE_RADIUS );
-    double b = str + rot * 1.5 * ( Constants.SWERVE_LENGTH / Constants.SWERVE_RADIUS );
-    double c = fwd - rot * 1.5 * ( Constants.SWERVE_WIDTH / Constants.SWERVE_RADIUS );
-    double d = fwd + rot * 1.5 * ( Constants.SWERVE_WIDTH / Constants.SWERVE_RADIUS );
+    double a = str - rot * 1.5 * ( Constants.SWERVE_FRAME_LENGTH / Constants.SWERVE_RADIUS );
+    double b = str + rot * 1.5 * ( Constants.SWERVE_FRAME_LENGTH / Constants.SWERVE_RADIUS );
+    double c = fwd - rot * 1.5 * ( Constants.SWERVE_FRAME_WIDTH / Constants.SWERVE_RADIUS );
+    double d = fwd + rot * 1.5 * ( Constants.SWERVE_FRAME_WIDTH / Constants.SWERVE_RADIUS );
     
     speed[1] = Math.sqrt( ( a * a ) + ( d * d ) );
     speed[2] = Math.sqrt( ( a * a ) + ( c * c ) );
@@ -77,10 +77,10 @@ public class GyroSwerveDrive extends SubsystemBase {
       fwd = intermediary;
     }
 
-    double a = str - rot * ( Constants.SWERVE_LENGTH / Constants.SWERVE_RADIUS );
-    double b = str + rot * ( Constants.SWERVE_LENGTH / Constants.SWERVE_RADIUS );
-    double c = fwd - rot * ( Constants.SWERVE_WIDTH / Constants.SWERVE_RADIUS );
-    double d = fwd + rot * ( Constants.SWERVE_WIDTH / Constants.SWERVE_RADIUS );
+    double a = str - rot * ( Constants.SWERVE_FRAME_LENGTH / Constants.SWERVE_RADIUS );
+    double b = str + rot * ( Constants.SWERVE_FRAME_LENGTH / Constants.SWERVE_RADIUS );
+    double c = fwd - rot * ( Constants.SWERVE_FRAME_WIDTH / Constants.SWERVE_RADIUS );
+    double d = fwd + rot * ( Constants.SWERVE_FRAME_WIDTH / Constants.SWERVE_RADIUS );
     
     speed[1] = Math.sqrt( ( a * a ) + ( d * d ) );
     speed[2] = Math.sqrt( ( a * a ) + ( c * c ) );
