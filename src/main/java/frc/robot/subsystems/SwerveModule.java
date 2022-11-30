@@ -24,15 +24,6 @@ public class SwerveModule {
 	private final double[]        steerAnglePIDConstants;
 	private final double[]        driveVelocityPIDConstants;
 	public double                 position;
-
-	public class Vector {
-		public Vector(
-			double x,
-			double y
-		) {}
-		public double x;
-		public double y;
-	};
 	
 	/* the SwerveModule subsystem */
 	public SwerveModule( int swerveModIndex ) {
@@ -71,15 +62,6 @@ public class SwerveModule {
 
 	public double getSteerAngle() {
 		return steerAngleEncoder.getAbsolutePosition();
-	}
-
-	public double vectorDotProduct( Vector a, Vector b) {
-		return a.x * b.x + a.y * b.y;
-	}
-
-	public Vector angleToUnitVector( double angle ) {
-		Vector result = new Vector( Math.cos( angle ), Math.sin( angle ) );
-		return result;
 	}
 
 	// angle and speed should be from -1.0 to 1.0, like a joystick input
