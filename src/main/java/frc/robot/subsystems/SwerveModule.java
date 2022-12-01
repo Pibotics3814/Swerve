@@ -62,14 +62,14 @@ public class SwerveModule {
 	}
 
 	public double getSteerAngle() {
-		return Math.toRadians( steerAngleEncoder.getAbsolutePosition() );
+		return steerAngleEncoder.getAbsolutePosition();
 	}
 
 	// angle and speed should be from -1.0 to 1.0, like a joystick input
 	public void drive( double speed, double angle ) {
 	    // Calculate the turning motor output from the turning PID controller.
 		double steerAngle = getSteerAngle();
-		position = steerAngle < Constants.HALF_PI ? ( Constants.HALF_PI - steerAngle ) / -Constants.HALF_PI : ( steerAngle - Constants.HALF_PI ) / Constants.HALF_PI;
+		position = steerAngle < 180.0 ? ( 180.0 - steerAngle ) / -180.0 : ( steerAngle - 180.0 ) / 180.0;
 		final var turnOutput = steerAnglePIDController.calculate( position, angle );
 		steerMotor.set( MathUtil.clamp( turnOutput, -1.0, 1.0 ) );
 

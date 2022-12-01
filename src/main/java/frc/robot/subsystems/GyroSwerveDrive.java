@@ -98,6 +98,8 @@ public class GyroSwerveDrive extends SubsystemBase {
       SmartDashboard.putNumber( "angle: " + i, angle[i] );
       SmartDashboard.putNumber( "speed: " + i, speed[i] );
 
+      double offsetSteerAngle = getOffsetSteerEncoderAngle(i);
+
       double encCount = Constants.swerveMod[i].steerAngleEncoder.getAbsolutePosition();
       angle[i] = ( angle[i] + 1 ) * Constants.SWERVE_ENC_CIRC / 2 + Constants.SWERVE_SETPOINT_OFFSET[i]; 
       if(angle[i] > Constants.SWERVE_ENC_CIRC) angle[i] -= Constants.SWERVE_ENC_CIRC;
@@ -109,6 +111,13 @@ public class GyroSwerveDrive extends SubsystemBase {
         //Constants.swerveMod[i].WheelEncoder.setInverted(Constants.ANGLE_MOTOR_INVERTED[i]==false);
       }
     }
+  }
+
+  private double getOffsetSteerEncoderAngle( int i ) {
+    double offsetAngle = Constants.swerveMod[i].steerAngleEncoder.getAbsolutePosition() + Constants.SWERVE_SETPOINT_OFFSET[i];
+    offsetAngle += ( offsetAngle > 360.0 ) && ( offsetAngle < 0.0 ) ? ( offsetAngle > 360.0 ? -360.0 : 360.0 ) : 0.0;
+    double remappedAngle = offsetAngle < 180.0 ? ( 180.0 - offsetAngle ) / -180.0 : ( offsetAngle - 180.0 ) / 180.0;
+    return remappedAngle;
   }
 
   public void reset_encoder(){
