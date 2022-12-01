@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.subsystems.SwerveModule;
 
 public final class Constants {
+	public static double HALF_PI = Math.PI / 2.0;
+
 	public static double driveDirection = 1.0;
 	public static double JOYSTICK_DEADBAND = 0.2; // was .05
 	public static double TRIGGER_DEADBAND = 0.2;
