@@ -37,12 +37,13 @@ public final class Constants {
 	////////////////////////////////////////
 
 	public static final double[] SWERVE_SETPOINT_OFFSET = { 0.0, 0.0, 0.0, 0.0 }; 
+
 	public static double[][] SWERVE_STEER_PID_CONSTANTS = { 
 		// kP   kI   kD
 		{ 0.6, 0.2, 0.0 }, //Front Right
-		{ 1.0, 0.0, 0.0 }, //Rear Right
-		{ 1.0, 0.0, 0.0 }, //Rear Left
-		{ 1.0, 0.0, 0.0 }  //Front Left
+		{ 0.6, 0.2, 0.0 }, //Rear Right
+		{ 0.6, 0.2, 0.0 }, //Rear Left
+		{ 0.6, 0.2, 0.0 }  //Front Left
 	};
 
 	//TODO: Add PID loop for drive motors
@@ -82,7 +83,7 @@ public final class Constants {
 	public static int[] SWERVE_STEER_MOTOR_IDS =     { 20, 21, 22, 23 };
 	public static int[] SWERVE_ENCODER_IDS =         {  1,  2,  3,  4 };
 
-	private static int swerveModuleNumber = 1;
+	private static int swerveModuleNumber = 4;
 
 	public static void init() {
 		// Front Right = 0, Back Right = 1, Back Left = 2, Front Left = 3
