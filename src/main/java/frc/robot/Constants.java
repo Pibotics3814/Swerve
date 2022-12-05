@@ -71,8 +71,8 @@ public final class Constants {
 	 * Want an explanation? Me too...
 	 */
 	public static double SWERVE_ENC_CIRC = 4.927;
-	public static double SWERVE_FRAME_LENGTH = 21.5;
-	public static double SWERVE_FRAME_WIDTH = 21.5;
+	public static double SWERVE_FRAME_LENGTH = 27.5;
+	public static double SWERVE_FRAME_WIDTH = 27.5;
 	public static double SWERVE_RADIUS = Math.sqrt( Math.pow( SWERVE_FRAME_LENGTH, 2 ) + Math.pow( SWERVE_FRAME_WIDTH, 2 ) );
 	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 20.0;
 	public static double driveMult = 0.7;
