@@ -29,7 +29,7 @@ public class SwerveModule {
 	/* the SwerveModule subsystem */
 	public SwerveModule( int swerveModIndex ) {
 		driveMotor = new CANSparkMax( Constants.SWERVE_DRIVE_MOTOR_IDS[ swerveModIndex ], MotorType.kBrushless );
-		driveMotor.setIdleMode(IdleMode.kBrake);
+		driveMotor.setIdleMode(IdleMode.kCoast);
 		driveMotor.setInverted( Constants.DRIVE_MOTOR_INVERTED[swerveModIndex] );
 		driveMotor.setOpenLoopRampRate( 0.2 );
 		//TODO: Add PID for driveMotor
@@ -48,6 +48,7 @@ public class SwerveModule {
 		driveVelocityPidController.setOutputRange( driveVelocityPIDConstants[5], driveVelocityPIDConstants[6] );
 
 		steerMotor = new CANSparkMax( Constants.SWERVE_STEER_MOTOR_IDS[swerveModIndex], MotorType.kBrushless );
+		steerMotor.setIdleMode(IdleMode.kCoast);
 		steerMotor.setInverted( Constants.STEER_MOTOR_INVERTED[swerveModIndex] );
 
 		steerAngleEncoder = new CANCoder( Constants.SWERVE_ENCODER_IDS[swerveModIndex] );
