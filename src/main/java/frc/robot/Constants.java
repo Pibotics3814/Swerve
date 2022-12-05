@@ -42,7 +42,7 @@ public final class Constants {
 		0.0, //Rear Left
 		0.0  //Front Left
 	}; 
-
+       
 	public static double[][] SWERVE_STEER_PID_CONSTANTS = { 
 		// kP   kI   kD
 		{ 0.6, 0.0, 0.0 }, //Front Right
