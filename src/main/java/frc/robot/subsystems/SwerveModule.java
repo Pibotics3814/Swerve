@@ -23,7 +23,7 @@ public class SwerveModule {
 	private PIDController         steerAnglePIDController;
 
 	private final double[]        steerAnglePIDConstants;
-	private final double[]        driveVelocityPIDConstants;
+	// private final double[]        driveVelocityPIDConstants;
 	public double                 position;
 	
 	/* the SwerveModule subsystem */
@@ -39,13 +39,13 @@ public class SwerveModule {
 		driveVelocityEncoder.setPositionConversionFactor( Constants.drvDistPerPulseRev );
 		driveVelocityEncoder.setMeasurementPeriod(20);
 
-		driveVelocityPIDConstants = Constants.SWERVE_DRIVE_PID_CONSTANTS[swerveModIndex];
-		driveVelocityPidController.setP( driveVelocityPIDConstants[0] );
-		driveVelocityPidController.setI( driveVelocityPIDConstants[1] );
-		driveVelocityPidController.setD( driveVelocityPIDConstants[2] );
-		driveVelocityPidController.setIZone( driveVelocityPIDConstants[3] );
-		driveVelocityPidController.setFF( driveVelocityPIDConstants[4] );
-		driveVelocityPidController.setOutputRange( driveVelocityPIDConstants[5], driveVelocityPIDConstants[6] );
+		// driveVelocityPIDConstants = Constants.SWERVE_DRIVE_PID_CONSTANTS[swerveModIndex];
+		// driveVelocityPidController.setP( driveVelocityPIDConstants[0] );
+		// driveVelocityPidController.setI( driveVelocityPIDConstants[1] );
+		// driveVelocityPidController.setD( driveVelocityPIDConstants[2] );
+		// driveVelocityPidController.setIZone( driveVelocityPIDConstants[3] );
+		// driveVelocityPidController.setFF( driveVelocityPIDConstants[4] );
+		// driveVelocityPidController.setOutputRange( driveVelocityPIDConstants[5], driveVelocityPIDConstants[6] );
 
 		steerMotor = new CANSparkMax( Constants.SWERVE_STEER_MOTOR_IDS[swerveModIndex], MotorType.kBrushless );
 		steerMotor.setIdleMode(IdleMode.kCoast);
