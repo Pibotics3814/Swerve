@@ -45,10 +45,10 @@ public final class Constants {
 
 	public static double[][] SWERVE_STEER_PID_CONSTANTS = { 
 		// kP   kI   kD
-		{ 0.6, 0.2, 0.0 }, //Front Right
-		{ 0.6, 0.2, 0.0 }, //Rear Right
-		{ 0.6, 0.2, 0.0 }, //Rear Left
-		{ 0.6, 0.2, 0.0 }  //Front Left
+		{ 0.6, 0.0, 0.0 }, //Front Right
+		{ 0.6, 0.0, 0.0 }, //Rear Right
+		{ 0.6, 0.0, 0.0 }, //Rear Left
+		{ 0.6, 0.0, 0.0 }  //Front Left
 	};
 
 	//TODO: Add PID loop for drive motors
