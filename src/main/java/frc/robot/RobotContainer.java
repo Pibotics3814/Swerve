@@ -35,6 +35,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    /*
     m_gyroSwerveDrive.setDefaultCommand(
       new GyroSwerveDriveCommand(
         () -> driveStick.getY(),
@@ -44,7 +45,8 @@ public class RobotContainer {
         m_gyroSwerveDrive
       )
     );
-    
+    //*/
+
     // Configure the button bindings
     configureButtonBindings();
   }
