@@ -48,6 +48,16 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    //IMPORTANT!!!! REMOVE AFTER INITIAL TEST
+    SmartDashboard.putNumber( "Gyro ADIS", m_robotContainer.gyro.getAngle() );
+    SmartDashboard.putNumber( "Module 1 encoder", Constants.swerveMod[0].getSteerAngle() );
+    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[0].position );
+    SmartDashboard.putNumber( "Module 2 encoder", Constants.swerveMod[1].getSteerAngle() );
+    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[1].position );
+    SmartDashboard.putNumber( "Module 3 encoder", Constants.swerveMod[2].getSteerAngle() );
+    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[2].position );
+    SmartDashboard.putNumber( "Module 4 encoder", Constants.swerveMod[3].getSteerAngle() );
+    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[4].position );
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -90,15 +100,15 @@ public class Robot extends TimedRobot {
     Constants.swerveMod[1].drive( 0.0, 0.5 );
     Constants.swerveMod[2].drive( 0.0, 0.5 );
     Constants.swerveMod[3].drive( 0.0, 0.5 );
-    SmartDashboard.putNumber( "Gyro ADIS", m_robotContainer.gyro.getAngle() );
-    SmartDashboard.putNumber( "Module 1 encoder", Constants.swerveMod[0].getSteerAngle() );
-    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[0].position );
-    SmartDashboard.putNumber( "Module 2 encoder", Constants.swerveMod[1].getSteerAngle() );
-    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[1].position );
-    SmartDashboard.putNumber( "Module 3 encoder", Constants.swerveMod[2].getSteerAngle() );
-    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[2].position );
-    SmartDashboard.putNumber( "Module 4 encoder", Constants.swerveMod[3].getSteerAngle() );
-    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[4].position );
+    // SmartDashboard.putNumber( "Gyro ADIS", m_robotContainer.gyro.getAngle() );
+    // SmartDashboard.putNumber( "Module 1 encoder", Constants.swerveMod[0].getSteerAngle() );
+    // SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[0].position );
+    // SmartDashboard.putNumber( "Module 2 encoder", Constants.swerveMod[1].getSteerAngle() );
+    // SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[1].position );
+    // SmartDashboard.putNumber( "Module 3 encoder", Constants.swerveMod[2].getSteerAngle() );
+    // SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[2].position );
+    // SmartDashboard.putNumber( "Module 4 encoder", Constants.swerveMod[3].getSteerAngle() );
+    // SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[4].position );
   }
 
   @Override
