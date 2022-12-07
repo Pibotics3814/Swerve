@@ -22,7 +22,7 @@ public class SwerveModule {
 	public RelativeEncoder        steerVelocityEncoder;
 	public CANCoder               steerAngleEncoder;
 	private SparkMaxPIDController steerVelocityPidController;
-	private ProfiledPIDController         steerAnglePIDController;
+	private PIDController         steerAnglePIDController;
 
 	private final double[]        steerAnglePIDConstants;
 	// private final double[]        driveVelocityPIDConstants;
@@ -56,11 +56,16 @@ public class SwerveModule {
 		steerAngleEncoder = new CANCoder( Constants.SWERVE_ENCODER_IDS[swerveModIndex] );
 
 		steerAnglePIDConstants = Constants.SWERVE_STEER_PID_CONSTANTS[swerveModIndex];
+		/*
 		steerAnglePIDController = new ProfiledPIDController( 
 			steerAnglePIDConstants[0],
 			 steerAnglePIDConstants[1],
 			  steerAnglePIDConstants[2],
 			   new TrapezoidProfile.Constraints( Constants.SWERVE_STEER_MAX_VELOCITY, Constants.SWERVE_STEER_MAX_ACCEL ) );
+		//*/ 
+		//*
+		steerAnglePIDController = new PIDController( steerAnglePIDConstants[0], steerAnglePIDConstants[1], steerAnglePIDConstants[2] );
+		//*/
 
         // Limit the PID Controller's input range between -pi and pi and set the input
 		// to be continuous.
