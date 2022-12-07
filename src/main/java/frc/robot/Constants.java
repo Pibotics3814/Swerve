@@ -45,10 +45,10 @@ public final class Constants {
        
 	public static double[][] SWERVE_STEER_PID_CONSTANTS = { 
 		// kP   kI   kD
-		{ 0.6, 0.0, 0.0 }, //Front Right
-		{ 0.6, 0.0, 0.0 }, //Rear Right
-		{ 0.6, 0.0, 0.0 }, //Rear Left
-		{ 0.6, 0.0, 0.0 }  //Front Left
+		{ 0.8, 0.0, 0.016 }, //Front Right
+		{ 0.8, 0.0, 0.016 }, //Rear Right
+		{ 0.8, 0.0, 0.016 }, //Rear Left
+		{ 0.8, 0.0, 0.016 }  //Front Left
 	};
 
 	//TODO: Add PID loop for drive motors
@@ -89,7 +89,7 @@ public final class Constants {
 	public static double SWERVE_FRAME_LENGTH = 27.5;
 	public static double SWERVE_FRAME_WIDTH = 27.5;
 	public static double SWERVE_RADIUS = Math.sqrt( Math.pow( SWERVE_FRAME_LENGTH, 2 ) + Math.pow( SWERVE_FRAME_WIDTH, 2 ) );
-	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 20.0;
+	public static double SWERVE_PID_TOLERANCE = 0.00001;//SWERVE_ENC_CIRC / 100.0 / 20.0;
 	public static double driveMult = 0.7;
     //TODO: update to match motors
     public static double drvDistPerPulseRev = ( 3.9 * 3.14 ) / ( 42 / 6.75 );  // inches
