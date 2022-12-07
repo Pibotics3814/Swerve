@@ -93,6 +93,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber( "Gyro ADIS", m_robotContainer.gyro.getAngle() );
     SmartDashboard.putNumber( "Module 1 encoder", Constants.swerveMod[0].getSteerAngle() );
     SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[0].position );
+    SmartDashboard.putNumber( "Module 2 encoder", Constants.swerveMod[1].getSteerAngle() );
+    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[1].position );
+    SmartDashboard.putNumber( "Module 3 encoder", Constants.swerveMod[2].getSteerAngle() );
+    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[2].position );
+    SmartDashboard.putNumber( "Module 4 encoder", Constants.swerveMod[3].getSteerAngle() );
+    SmartDashboard.putNumber( "Interpret encoder", Constants.swerveMod[4].position );
   }
 
   @Override
