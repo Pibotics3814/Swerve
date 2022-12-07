@@ -37,10 +37,10 @@ public final class Constants {
 	////////////////////////////////////////
 
 	public static final double[] SWERVE_SETPOINT_OFFSET = { 
-		0.0, //Front Right
-		0.0, //Rear Right
-		0.0, //Rear Left
-		0.0  //Front Left
+		7.03, //Front Right
+		-40.69, //Rear Right
+		89.21, //Rear Left
+		-1.41  //Front Left
 	}; 
        
 	public static double[][] SWERVE_STEER_PID_CONSTANTS = { 
