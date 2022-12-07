@@ -84,8 +84,8 @@ public final class Constants {
 	 * Swerve module motor and encoder ids
 	 * { Front Right, Back Right, Back Left, Front Left }
 	 */
-	public static int[] SWERVE_DRIVE_MOTOR_IDS =     { 10, 11, 12, 13 };
-	public static int[] SWERVE_STEER_MOTOR_IDS =     { 20, 21, 22, 23 };
+	public static int[] SWERVE_DRIVE_MOTOR_IDS =     { 20, 11, 12, 13 };
+	public static int[] SWERVE_STEER_MOTOR_IDS =     { 10, 21, 22, 23 };
 	public static int[] SWERVE_ENCODER_IDS =         {  1,  2,  3,  4 };
 
 	private static int swerveModuleNumber = 4;
