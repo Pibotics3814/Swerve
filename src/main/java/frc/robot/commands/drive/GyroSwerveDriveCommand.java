@@ -11,6 +11,8 @@ import frc.robot.subsystems.GyroSwerveDrive;
 
 public class GyroSwerveDriveCommand extends CommandBase {
     DoubleSupplier dX, dY, dZ;
+    double driveX, driveY, driveZ;
+    double rawX, rawY, rawZ;
     ADIS16470_IMU m_gyro;
     GyroSwerveDrive m_gyroSwerveDrive;
 
@@ -29,7 +31,16 @@ public class GyroSwerveDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-       m_gyroSwerveDrive.gyroDrive( dX.getAsDouble(), dY.getAsDouble(), dZ.getAsDouble(), Math.toRadians( m_gyro.getAngle() ) );
+      driveX = 0.0;
+      rawX = dX.getAsDouble();
+      if(Math.abs(rawX) > Constants.JOYSTICK_DEADBAND) driveX = rawX;
+      driveY = 0.0;
+      rawY = dY.getAsDouble();
+      if(Math.abs(rawY) > Constants.JOYSTICK_DEADBAND) driveY = rawY;
+      driveZ = 0.0;
+      rawX = dZ.getAsDouble();
+      if(Math.abs(rawZ) > Constants.JOYSTICK_DEADBAND) driveZ = rawZ;
+      m_gyroSwerveDrive.gyroDrive( driveX, driveY, driveZ, Math.toRadians( m_gyro.getAngle() ) );
     }
 
   

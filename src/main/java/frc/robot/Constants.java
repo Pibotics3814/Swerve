@@ -89,7 +89,7 @@ public final class Constants {
 	public static double SWERVE_FRAME_LENGTH = 27.5;
 	public static double SWERVE_FRAME_WIDTH = 27.5;
 	public static double SWERVE_RADIUS = Math.sqrt( Math.pow( SWERVE_FRAME_LENGTH, 2 ) + Math.pow( SWERVE_FRAME_WIDTH, 2 ) );
-	public static double SWERVE_PID_TOLERANCE = 0.00001;//SWERVE_ENC_CIRC / 100.0 / 20.0;
+	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 20.0;
 	public static double driveMult = 0.7;
     //TODO: update to match motors
     public static double drvDistPerPulseRev = ( 3.9 * 3.14 ) / ( 42 / 6.75 );  // inches
