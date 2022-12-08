@@ -128,7 +128,7 @@ public class GyroSwerveDrive extends SubsystemBase {
   }
 
   public double GetCurrentDistance() {  // reading wheel 0 only
-    double dist =0.0;
+    double dist = 0.0;
         dist = -Constants.swerveMod[2].driveVelocityEncoder.getPosition();
         return( dist );
   }
