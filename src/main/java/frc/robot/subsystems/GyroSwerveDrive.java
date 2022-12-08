@@ -99,14 +99,14 @@ public class GyroSwerveDrive extends SubsystemBase {
 
   public void setSetpoints( double rot ) {
     for(int i = 0; i < 4; i++) {
-      SmartDashboard.putNumber( "angle: " + i, angle[i] );
-      SmartDashboard.putNumber( "speed: " + i, speed[i] );
-
       double steerAngle = Constants.swerveMod[i].getSteerAngle();
       if(getDeltaAngle(angle[i], steerAngle) > 0.5) {
         angle[i] =  Math.abs(Math.abs(angle[i] + 2.0) % 2.0) - 1.0;
         speed[i] = -speed[i];
       }
+
+      SmartDashboard.putNumber( "angle: " + i, angle[i] );
+      SmartDashboard.putNumber( "speed: " + i, speed[i] );
     }
   }
 
