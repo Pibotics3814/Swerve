@@ -150,7 +150,7 @@ public class GyroSwerveDrive extends SubsystemBase {
 
     for(int i = 0; i < 4; i++){
       double steerAngle = Constants.swerveMod[i].getSteerAngle();
-      if(getDeltaAngle(angle[i], steerAngle) > 90) {
+      if(getDeltaAngle(angle[i], steerAngle) > 0.5) {
         angle[i] =  Math.abs(Math.abs(angle[i] + 2.0) % 2.0) - 1.0;
         speed[i] = -speed[i];
       }
