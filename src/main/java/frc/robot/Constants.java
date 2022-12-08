@@ -8,8 +8,10 @@ import frc.robot.subsystems.SwerveModule;
 
 public final class Constants {
 	public static double driveDirection = 1.0;
-	public static double JOYSTICK_DEADBAND = 0.3; // was .05
+	public static double JOYSTICK_DEADZONE = 0.2; 
 	public static double TRIGGER_DEADBAND = 0.2;
+
+	public static double MAX_SPEED_JOYSTICK = 0.7;
 
 	public static boolean FieldCentricDrive = true;
 	

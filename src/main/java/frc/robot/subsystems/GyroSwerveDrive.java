@@ -21,7 +21,8 @@ public class GyroSwerveDrive extends SubsystemBase {
     setSetpoints( rot ); 
 
     for(int i = 0; i < 4; i++) {
-        Constants.swerveMod[i].drive( speed[i], angle[i] );
+      speed[i] *= Constants.MAX_SPEED_JOYSTICK;
+      Constants.swerveMod[i].drive( speed[i], angle[i] );
     }
   }
 
