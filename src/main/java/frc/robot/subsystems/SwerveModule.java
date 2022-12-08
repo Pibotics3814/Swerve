@@ -76,12 +76,10 @@ public class SwerveModule {
 		angleOffset = Constants.SWERVE_SETPOINT_OFFSET[swerveModIndex];
 	}
 
+	private static final double INVERSE_180 = 1.0 / 180.0;  
 	private double getOffsetSteerEncoderAngle(double angle) {
-		double offsetAngle = angle + angleOffset;
-		offsetAngle += ( offsetAngle > 360.0 ) && ( offsetAngle < 0.0 ) ? ( offsetAngle > 360.0 ? -360.0 : 360.0 ) : 0.0;
-		double remappedAngle = offsetAngle < 180.0 ? ( 180.0 - offsetAngle ) / -180.0 : ( offsetAngle - 180.0 ) / 180.0;
-		return remappedAngle;
-	  }
+		return ((angle + angleOffset) % 360.0 - 180.0) * INVERSE_180;
+	}
 
 	public double getSteerAngle() {
 		return getOffsetSteerEncoderAngle(steerAngleEncoder.getAbsolutePosition());
@@ -91,7 +89,6 @@ public class SwerveModule {
 	public void drive( double speed, double angle ) {
 	    // Calculate the turning motor output from the turning PID controller.
 		double position = getSteerAngle();
-		//position = steerAngle < 180.0 ? ( 180.0 - steerAngle ) / -180.0 : ( steerAngle - 180.0 ) / 180.0;
 		final var turnOutput = steerAnglePIDController.calculate( position, angle );
 		steerMotor.set( MathUtil.clamp( turnOutput, -1.0, 1.0 ) );
 
