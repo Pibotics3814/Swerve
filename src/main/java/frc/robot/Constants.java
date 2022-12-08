@@ -76,7 +76,7 @@ public final class Constants {
 	public static double SWERVE_STEER_MAX_ACCEL = SWERVE_STEER_MOTOR_TORQUE / SWERVE_STEER_MOTOR_MASS;
 
 	public static boolean[] STEER_MOTOR_INVERTED = { false, false, false, false };
-	public static boolean[] DRIVE_MOTOR_INVERTED = { true, true, false, false };
+	public static boolean[] DRIVE_MOTOR_INVERTED = { true, false, true, false };
 	
 	public static SwerveModule[] swerveMod;
 	
