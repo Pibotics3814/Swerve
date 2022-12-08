@@ -8,8 +8,10 @@ import frc.robot.subsystems.SwerveModule;
 
 public final class Constants {
 	public static double driveDirection = 1.0;
-	public static double JOYSTICK_DEADBAND = 0.2; // was .05
+	public static double JOYSTICK_DEADZONE = 0.2; 
 	public static double TRIGGER_DEADBAND = 0.2;
+
+	public static double MAX_SPEED_JOYSTICK = 0.7;
 
 	public static boolean FieldCentricDrive = true;
 	
@@ -37,10 +39,11 @@ public final class Constants {
 	////////////////////////////////////////
 
 	public static final double[] SWERVE_SETPOINT_OFFSET = { 
+		//must be between 0 & 360 degrees
 		7.03, //Front Right
-		-40.69, //Rear Right
+		319.31, //Rear Right
 		89.21, //Rear Left
-		-1.41  //Front Left
+		358.59  //Front Left
 	}; 
        
 	public static double[][] SWERVE_STEER_PID_CONSTANTS = { 
@@ -89,7 +92,7 @@ public final class Constants {
 	public static double SWERVE_FRAME_LENGTH = 27.5;
 	public static double SWERVE_FRAME_WIDTH = 27.5;
 	public static double SWERVE_RADIUS = Math.sqrt( Math.pow( SWERVE_FRAME_LENGTH, 2 ) + Math.pow( SWERVE_FRAME_WIDTH, 2 ) );
-	public static double SWERVE_PID_TOLERANCE = 0.00001;//SWERVE_ENC_CIRC / 100.0 / 20.0;
+	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 20.0;
 	public static double driveMult = 0.7;
     //TODO: update to match motors
     public static double drvDistPerPulseRev = ( 3.9 * 3.14 ) / ( 42 / 6.75 );  // inches
@@ -101,10 +104,11 @@ public final class Constants {
 	 */
 	public static int[] SWERVE_DRIVE_MOTOR_IDS =     { 20, 11, 12, 13 };
 	public static int[] SWERVE_STEER_MOTOR_IDS =     { 10, 21, 22, 23 };
-	public static int[] SWERVE_ENCODER_IDS =         {  1,  2,  3,  4 };
+	public static int[] SWERVE_ENCODER_IDS =         {  1,  3,  2,  4 };
 
 	private static int swerveModuleNumber = 4;
 
+	
 	public static void init() {
 		// Front Right = 0, Back Right = 1, Back Left = 2, Front Left = 3
 		//*

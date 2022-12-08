@@ -9,11 +9,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.GyroReset;
 import frc.robot.commands.drive.GyroSwerveDriveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.GyroSwerveDrive;
 import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,7 +29,8 @@ public class RobotContainer {
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final GyroSwerveDrive m_gyroSwerveDrive = new GyroSwerveDrive();
+  public final GyroSwerveDrive m_gyroSwerveDrive = new GyroSwerveDrive();
+  public final GyroReset gyroReset = new GyroReset( gyro );
 
   private final ExampleCommand m_autoCommand = new ExampleCommand( m_exampleSubsystem );
 
@@ -38,8 +41,8 @@ public class RobotContainer {
     //*
     m_gyroSwerveDrive.setDefaultCommand(
       new GyroSwerveDriveCommand(
-        () -> driveStick.getY(),
         () -> driveStick.getX(),
+        () -> driveStick.getY(),
         () -> driveStick.getZ(),
         gyro,
         m_gyroSwerveDrive
@@ -57,7 +60,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    JoystickButton triggerGyroReset = new JoystickButton(driveStick, 3);
+    triggerGyroReset.whenPressed(new GyroReset(gyro));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

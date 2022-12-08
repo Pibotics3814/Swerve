@@ -21,7 +21,8 @@ public class GyroSwerveDrive extends SubsystemBase {
     setSetpoints( rot ); 
 
     for(int i = 0; i < 4; i++) {
-        Constants.swerveMod[i].drive( speed[i], angle[i] );
+      speed[i] *= Constants.MAX_SPEED_JOYSTICK;
+      Constants.swerveMod[i].drive( speed[i], angle[i] );
     }
   }
 
@@ -70,6 +71,10 @@ public class GyroSwerveDrive extends SubsystemBase {
     return opp;
   }
 
+  private double getDeltaAngle( double alpha, double beta){
+    return 1.0 - Math.abs(Math.abs(alpha - beta) % 2.0 - 1.0);
+  }
+
   public void computeSwerveInputs( double str, double fwd, double rot, double gyroAngle ) {
     if(fcd){
       double intermediary = fwd * Math.cos( gyroAngle ) + str * Math.sin( gyroAngle );
@@ -95,29 +100,15 @@ public class GyroSwerveDrive extends SubsystemBase {
 
   public void setSetpoints( double rot ) {
     for(int i = 0; i < 4; i++) {
+      double steerAngle = Constants.swerveMod[i].getSteerAngle();
+      if(getDeltaAngle(angle[i], steerAngle) > 0.5) {
+        angle[i] =  Math.abs(Math.abs(angle[i] + 2.0) % 2.0) - 1.0;
+        speed[i] = -speed[i];
+      }
+
       SmartDashboard.putNumber( "angle: " + i, angle[i] );
       SmartDashboard.putNumber( "speed: " + i, speed[i] );
-
-      double offsetSteerAngle = getOffsetSteerEncoderAngle(i);
-
-      double encCount = Constants.swerveMod[i].steerAngleEncoder.getAbsolutePosition();
-      angle[i] = ( angle[i] + 1 ) * Constants.SWERVE_ENC_CIRC / 2 + Constants.SWERVE_SETPOINT_OFFSET[i]; 
-      if(angle[i] > Constants.SWERVE_ENC_CIRC) angle[i] -= Constants.SWERVE_ENC_CIRC;
-
-      double degreesBeforeFlip = 90.0;
-      if(Math.abs( encCount - angle[i] ) > Constants.SWERVE_ENC_CIRC / 360 * degreesBeforeFlip) {
-        angle[i] = getOppositeAngle(i);
-        speed[i] *= -1;
-        //Constants.swerveMod[i].WheelEncoder.setInverted(Constants.ANGLE_MOTOR_INVERTED[i]==false);
-      }
     }
-  }
-
-  private double getOffsetSteerEncoderAngle( int i ) {
-    double offsetAngle = Constants.swerveMod[i].steerAngleEncoder.getAbsolutePosition() + Constants.SWERVE_SETPOINT_OFFSET[i];
-    offsetAngle += ( offsetAngle > 360.0 ) && ( offsetAngle < 0.0 ) ? ( offsetAngle > 360.0 ? -360.0 : 360.0 ) : 0.0;
-    double remappedAngle = offsetAngle < 180.0 ? ( 180.0 - offsetAngle ) / -180.0 : ( offsetAngle - 180.0 ) / 180.0;
-    return remappedAngle;
   }
 
   public void reset_encoder(){
@@ -137,11 +128,10 @@ public class GyroSwerveDrive extends SubsystemBase {
   }
 
   public double GetCurrentDistance() {  // reading wheel 0 only
-    double dist =0.0;
+    double dist = 0.0;
         dist = -Constants.swerveMod[2].driveVelocityEncoder.getPosition();
         return( dist );
-}
-
+  }
 
   public void driveStraight( double fwd ) {
     double a = 0;
@@ -160,16 +150,11 @@ public class GyroSwerveDrive extends SubsystemBase {
     angle[3] = Math.atan2( b, c ) / Math.PI;
 
     for(int i = 0; i < 4; i++){
-      double encCount = Constants.swerveMod[i].steerAngleEncoder.getAbsolutePosition(); 
-      angle[i] = ( angle[i] + 1 ) * Constants.SWERVE_ENC_CIRC / 2 + Constants.SWERVE_SETPOINT_OFFSET[i]; 
-      if(angle[i] > Constants.SWERVE_ENC_CIRC) angle[i] -= Constants.SWERVE_ENC_CIRC;
-
-      double degreesBeforeFlip = 90.0;
-      if(Math.abs( encCount - angle[i] ) > Constants.SWERVE_ENC_CIRC / 360 * degreesBeforeFlip) {
-        angle[i] = getOppositeAngle( i );
-        speed[i] *= -1;
+      double steerAngle = Constants.swerveMod[i].getSteerAngle();
+      if(getDeltaAngle(angle[i], steerAngle) > 0.5) {
+        angle[i] =  Math.abs(Math.abs(angle[i] + 2.0) % 2.0) - 1.0;
+        speed[i] = -speed[i];
       }
-
       Constants.swerveMod[i].drive( speed[i], angle[i] );
     }
   }
