@@ -20,7 +20,7 @@ public class SwerveModule {
 
 	public CANSparkMax            steerMotor;
 	public RelativeEncoder        steerVelocityEncoder;
-	public CANCoder               steerAngleEncoder;
+	private CANCoder              steerAngleEncoder;
 	private SparkMaxPIDController steerVelocityPidController;
 	private PIDController         steerAnglePIDController;
 
@@ -57,18 +57,9 @@ public class SwerveModule {
 		steerAngleEncoder = new CANCoder( Constants.SWERVE_ENCODER_IDS[swerveModIndex] );
 
 		steerAnglePIDConstants = Constants.SWERVE_STEER_PID_CONSTANTS[swerveModIndex];
-		/*
-		steerAnglePIDController = new ProfiledPIDController( 
-			steerAnglePIDConstants[0],
-			 steerAnglePIDConstants[1],
-			  steerAnglePIDConstants[2],
-			   new TrapezoidProfile.Constraints( Constants.SWERVE_STEER_MAX_VELOCITY, Constants.SWERVE_STEER_MAX_ACCEL ) );
-		//*/ 
-		//*
 		steerAnglePIDController = new PIDController( steerAnglePIDConstants[0], steerAnglePIDConstants[1], steerAnglePIDConstants[2] );
-		//*/
 
-        // Limit the PID Controller's input range between -pi and pi and set the input
+        // Limit the PID Controller's input range between -1.0 and 1.0 and set the input
 		// to be continuous.
         steerAnglePIDController.enableContinuousInput( -1.0, 1.0 );
 		steerAnglePIDController.setTolerance( Constants.SWERVE_PID_TOLERANCE );
@@ -78,7 +69,7 @@ public class SwerveModule {
 
 	private static final double INVERSE_180 = 1.0 / 180.0;  
 	private double getOffsetSteerEncoderAngle(double angle) {
-		return ((angle + angleOffset) % 360.0 - 180.0) * INVERSE_180;
+		return (Math.abs(angle + angleOffset) % 360.0 - 180.0) * INVERSE_180;
 	}
 
 	public double getSteerAngle() {
