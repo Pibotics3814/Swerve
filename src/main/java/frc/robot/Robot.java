@@ -86,10 +86,10 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    // Constants.swerveMod[0].drive( 0.4, 0.0 );
-    // Constants.swerveMod[1].drive( 0.4, 0.0 );
-    // Constants.swerveMod[2].drive( 0.4, 0.0 );
-    // Constants.swerveMod[3].drive( 0.4, 0.0 );
+    Constants.swerveMod[0].drive( 0.0, 0.0 );
+    Constants.swerveMod[1].drive( 0.0, 0.0 );
+    Constants.swerveMod[2].drive( 0.0, 0.0 );
+    Constants.swerveMod[3].drive( 0.0, 0.0 );
     SmartDashboard.putNumber( "Gyro ADIS", m_robotContainer.gyro.getAngle() );
     SmartDashboard.putNumber( "Module 1 encoder", Constants.swerveMod[0].getSteerAngle() );
     SmartDashboard.putNumber( "Module 2 encoder", Constants.swerveMod[1].getSteerAngle() );
