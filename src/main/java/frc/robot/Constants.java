@@ -101,10 +101,11 @@ public final class Constants {
 	 */
 	public static int[] SWERVE_DRIVE_MOTOR_IDS =     { 20, 11, 12, 13 };
 	public static int[] SWERVE_STEER_MOTOR_IDS =     { 10, 21, 22, 23 };
-	public static int[] SWERVE_ENCODER_IDS =         {  1,  2,  3,  4 };
+	public static int[] SWERVE_ENCODER_IDS =         {  1,  3,  2,  4 };
 
 	private static int swerveModuleNumber = 4;
 
+	
 	public static void init() {
 		// Front Right = 0, Back Right = 1, Back Left = 2, Front Left = 3
 		//*
