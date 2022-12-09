@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -32,6 +33,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     Constants.init();
     m_robotContainer = new RobotContainer();
+    m_robotContainer.gyro.setYawAxis(IMUAxis.kZ);
+    m_robotContainer.gyro.reset();
   }
 
   /**
@@ -90,7 +93,9 @@ public class Robot extends TimedRobot {
     // Constants.swerveMod[1].drive( 0.4, 0.0 );
     // Constants.swerveMod[2].drive( 0.4, 0.0 );
     // Constants.swerveMod[3].drive( 0.4, 0.0 );
-    SmartDashboard.putNumber( "Gyro ADIS", m_robotContainer.gyro.getAngle() );
+    SmartDashboard.putNumber( "Gyro yaw", m_robotContainer.gyro.getAngle() );
+    SmartDashboard.putNumber( "Gyro roll", m_robotContainer.gyro.getXComplementaryAngle() );
+    SmartDashboard.putNumber( "Gyro pitch", m_robotContainer.gyro.getYComplementaryAngle() );
     SmartDashboard.putNumber( "Module 1 encoder", Constants.swerveMod[0].getSteerAngle() );
     SmartDashboard.putNumber( "Module 2 encoder", Constants.swerveMod[1].getSteerAngle() );
     SmartDashboard.putNumber( "Module 3 encoder", Constants.swerveMod[2].getSteerAngle() );
