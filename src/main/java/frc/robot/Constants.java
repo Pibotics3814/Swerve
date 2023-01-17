@@ -81,8 +81,6 @@ public final class Constants {
 	public static boolean[] STEER_MOTOR_INVERTED = { false, false, false, false };
 	public static boolean[] DRIVE_MOTOR_INVERTED = { true, false, true, false };
 	
-	public static SwerveModule[] swerveMod;
-	
 	/*
 	 * Swerve constants for swerve module calculations
 	 * Don't question and just assume
@@ -106,16 +104,5 @@ public final class Constants {
 	public static int[] SWERVE_STEER_MOTOR_IDS =     { 10, 21, 22, 23 };
 	public static int[] SWERVE_ENCODER_IDS =         {  1,  3,  2,  4 };
 
-	private static int swerveModuleNumber = 4;
-
-	
-	public static void init() {
-		// Front Right = 0, Back Right = 1, Back Left = 2, Front Left = 3
-		//*
-		swerveMod = new SwerveModule[swerveModuleNumber];
-		for (int i = 0; i < swerveModuleNumber; i++) {
-			 swerveMod[i] = new SwerveModule( i );
-		}
-		//*/
-	}
+	public static int swerveModuleNumber = 4;
 }

@@ -4,6 +4,7 @@ import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import com.revrobotics.RelativeEncoder;
@@ -11,6 +12,9 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import java.sql.DriverAction;
+
 import com.ctre.phoenix.sensors.CANCoder;
 
 public class SwerveModule {
@@ -28,6 +32,7 @@ public class SwerveModule {
 	// private final double[]        driveVelocityPIDConstants;
 	public double                 position;
 	private double                angleOffset;
+	private double                maxCurrent = 0;
 	
 	/* the SwerveModule subsystem */
 	public SwerveModule( int swerveModIndex ) {
@@ -35,6 +40,7 @@ public class SwerveModule {
 		driveMotor.setIdleMode(IdleMode.kCoast);
 		driveMotor.setInverted( Constants.DRIVE_MOTOR_INVERTED[swerveModIndex] );
 		driveMotor.setOpenLoopRampRate( 0.2 );
+		driveMotor.setSmartCurrentLimit(70, 50);
 		//TODO: Add PID for driveMotor
 
 		driveVelocityEncoder = driveMotor.getEncoder();
@@ -53,6 +59,7 @@ public class SwerveModule {
 		steerMotor = new CANSparkMax( Constants.SWERVE_STEER_MOTOR_IDS[swerveModIndex], MotorType.kBrushless );
 		steerMotor.setIdleMode(IdleMode.kCoast);
 		steerMotor.setInverted( Constants.STEER_MOTOR_INVERTED[swerveModIndex] );
+		steerMotor.setSmartCurrentLimit(50, 40);
 
 		steerAngleEncoder = new CANCoder( Constants.SWERVE_ENCODER_IDS[swerveModIndex] );
 
@@ -67,9 +74,15 @@ public class SwerveModule {
 		angleOffset = Constants.SWERVE_SETPOINT_OFFSET[swerveModIndex];
 	}
 
-	private static final double INVERSE_180 = 1.0 / 180.0;  
+	private static final double INVERSE_180 = 1.0 / 180.0; 
+
 	private double getOffsetSteerEncoderAngle(double angle) {
 		return (Math.abs(angle + angleOffset) % 360.0 - 180.0) * INVERSE_180;
+	}
+
+	private double maxCurrent(double nowCurrent){
+		maxCurrent = Math.max(nowCurrent, maxCurrent);
+		return maxCurrent;
 	}
 
 	public double getSteerAngle() {

@@ -12,6 +12,8 @@ public class GyroSwerveDrive extends SubsystemBase {
   public double[] angle = new double[4];
   public boolean  fcd = true;
 
+  private SwerveModule[] swerveMod = {new SwerveModule(0), new SwerveModule(1), new SwerveModule(2), new SwerveModule(3)};
+
   ADIS16470_IMU m_gyro;
 
   public void gyroDrive( double str, double fwd, double rot, double gyroAngle ) {
@@ -22,7 +24,7 @@ public class GyroSwerveDrive extends SubsystemBase {
 
     for(int i = 0; i < 4; i++) {
       speed[i] *= Constants.MAX_SPEED_JOYSTICK;
-      Constants.swerveMod[i].drive( speed[i], angle[i] );
+      swerveMod[i].drive( speed[i], angle[i] );
     }
   }
 
@@ -43,14 +45,14 @@ public class GyroSwerveDrive extends SubsystemBase {
     angle[3] = Math.atan2 ( b, c ) / Math.PI;
     setSetpoints(rot); 
     for (int i = 0; i < 4; i++) {
-        Constants.swerveMod[i].drive( speed[i], angle[i] );
+        swerveMod[i].drive( speed[i], angle[i] );
     }
   }
 
 
   public void autoDrive( double angle, double speed ) {
     for (int i = 0; i < 4; i++) {
-      Constants.swerveMod[i].drive( angle, speed );
+      swerveMod[i].drive( angle, speed );
     }
   }
 
@@ -60,7 +62,7 @@ public class GyroSwerveDrive extends SubsystemBase {
     for(int i = 0; i < 4; i++) {
       // when back button is pressed then command wheels to zero 
       if ( Constants.Driverbackbutton ) Robot.gyroSwerveDrive.driveStraight( 0.0 );
-      else Constants.swerveMod[i].drive( 0.0, angle[i] );
+      else swerveMod[i].drive( 0.0, angle[i] );
     }
   }
 
@@ -100,7 +102,7 @@ public class GyroSwerveDrive extends SubsystemBase {
 
   public void setSetpoints( double rot ) {
     for(int i = 0; i < 4; i++) {
-      double steerAngle = Constants.swerveMod[i].getSteerAngle();
+      double steerAngle = swerveMod[i].getSteerAngle();
       if(getDeltaAngle(angle[i], steerAngle) > 0.5) {
         angle[i] =  Math.abs(Math.abs(angle[i] + 2.0) % 2.0) - 1.0;
         speed[i] = -speed[i];
@@ -112,24 +114,24 @@ public class GyroSwerveDrive extends SubsystemBase {
   }
 
   public void reset_encoder(){
-      Constants.swerveMod[2].driveVelocityEncoder.setPosition( 0.0 );
+      swerveMod[2].driveVelocityEncoder.setPosition( 0.0 );
   }
 
   public void WheelToCoast(){
     for(int i = 0; i < 4; i++){
-       Constants.swerveMod[i].driveMotor.setIdleMode( IdleMode.kCoast );
+       swerveMod[i].driveMotor.setIdleMode( IdleMode.kCoast );
     }
   }
 
   public void WheelToBrake(){
     for(int i = 0; i < 4; i++){
-       Constants.swerveMod[i].driveMotor.setIdleMode( IdleMode.kBrake );
+       swerveMod[i].driveMotor.setIdleMode( IdleMode.kBrake );
     }
   }
 
   public double GetCurrentDistance() {  // reading wheel 0 only
     double dist = 0.0;
-        dist = -Constants.swerveMod[2].driveVelocityEncoder.getPosition();
+        dist = -swerveMod[2].driveVelocityEncoder.getPosition();
         return( dist );
   }
 
@@ -150,12 +152,19 @@ public class GyroSwerveDrive extends SubsystemBase {
     angle[3] = Math.atan2( b, c ) / Math.PI;
 
     for(int i = 0; i < 4; i++){
-      double steerAngle = Constants.swerveMod[i].getSteerAngle();
+      double steerAngle = swerveMod[i].getSteerAngle();
       if(getDeltaAngle(angle[i], steerAngle) > 0.5) {
         angle[i] =  Math.abs(Math.abs(angle[i] + 2.0) % 2.0) - 1.0;
         speed[i] = -speed[i];
       }
-      Constants.swerveMod[i].drive( speed[i], angle[i] );
+      swerveMod[i].drive( speed[i], angle[i] );
     }
+  }
+
+  public void outputEncoderPos(){
+    SmartDashboard.putNumber( "Module 1 encoder", swerveMod[0].getSteerAngle() );
+    SmartDashboard.putNumber( "Module 2 encoder", swerveMod[1].getSteerAngle() );
+    SmartDashboard.putNumber( "Module 3 encoder", swerveMod[2].getSteerAngle() );
+    SmartDashboard.putNumber( "Module 4 encoder", swerveMod[3].getSteerAngle() );
   }
 }

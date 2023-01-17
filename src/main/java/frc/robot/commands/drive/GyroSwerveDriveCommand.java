@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.GyroSwerveDrive;
 
@@ -47,7 +48,9 @@ public class GyroSwerveDriveCommand extends CommandBase {
       if(driveZ <= 0.0) driveZ = 0.0;
       else if(rawZ <= 0.0) driveZ = -driveZ;
 
-      m_gyroSwerveDrive.gyroDrive( driveX, driveY, driveZ, Math.toRadians( m_gyro.getAngle() ) );
+      m_gyroSwerveDrive.gyroDrive( driveX, driveY, driveZ, Math.toRadians( m_gyro.getAngle () ) );
+
+      SmartDashboard.putNumber( "Gyro ADIS", m_gyro.getAngle() );
     }
 
   

@@ -30,7 +30,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    Constants.init();
     m_robotContainer = new RobotContainer();
   }
 
@@ -90,11 +89,6 @@ public class Robot extends TimedRobot {
     // Constants.swerveMod[1].drive( 0.4, 0.0 );
     // Constants.swerveMod[2].drive( 0.4, 0.0 );
     // Constants.swerveMod[3].drive( 0.4, 0.0 );
-    SmartDashboard.putNumber( "Gyro ADIS", m_robotContainer.gyro.getAngle() );
-    SmartDashboard.putNumber( "Module 1 encoder", Constants.swerveMod[0].getSteerAngle() );
-    SmartDashboard.putNumber( "Module 2 encoder", Constants.swerveMod[1].getSteerAngle() );
-    SmartDashboard.putNumber( "Module 3 encoder", Constants.swerveMod[2].getSteerAngle() );
-    SmartDashboard.putNumber( "Module 4 encoder", Constants.swerveMod[3].getSteerAngle() );
   }
 
   @Override
